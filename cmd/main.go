@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dani-api/router"
 	"net/http"
 	"time"
 
@@ -14,9 +15,11 @@ func main() {
 	en.Use(middleware.ContextTimeout(60 * time.Second))
 	en.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(20.0)))
 	en.Pre(middleware.RemoveTrailingSlash())
+	en.Use(middleware.RequestLogger())
 
 	e := en.Group("/api")
-	e.Use(middleware.RequestLogger())
+
+	router.InitAdminRoutes(e)
 
 	// testing route
 	e.GET("/ping", func(c *echo.Context) error {
