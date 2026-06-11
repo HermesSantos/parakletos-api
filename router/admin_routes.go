@@ -12,6 +12,11 @@ func InitAdminRoutes(c *echo.Group) {
 		return c.JSON(200, "admin")
 	})
 
+	// auth admin routes
 	ar.Use(echojwt.JWT([]byte("bf6c063e-7ac2-445a-bc15-6c3590e78838")))
+
+	ar.GET("/dash", func(c *echo.Context) error {
+		return c.JSON(200, "admin")
+	})
 
 }
