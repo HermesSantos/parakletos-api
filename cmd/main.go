@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dani-api/db"
 	"dani-api/router"
 	"net/http"
 	"time"
@@ -16,6 +17,12 @@ func main() {
 	en.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(20.0)))
 	en.Pre(middleware.RemoveTrailingSlash())
 	en.Use(middleware.RequestLogger())
+
+	db, err := db.NewMySQL()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
 
 	e := en.Group("/api")
 

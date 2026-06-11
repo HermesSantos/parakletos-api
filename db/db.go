@@ -30,7 +30,7 @@ func NewMySQL() (*sql.DB, error) {
 		return nil, err
 	}
 
-	fmt.Println("Connected!")
+	fmt.Println("Database connected!")
 
 	return conn, nil
 }
